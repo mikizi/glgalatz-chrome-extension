@@ -61,15 +61,26 @@
             background: #51305f;
             cursor: pointer;
         }
+
+        p#playingNow {
+            margin-top: -12px;
+            text-align: center;
+            direction: rtl;
+            color: #ffd51e;
+        }
+
     </style>
 </head>
 <body>
 <img src="glgtz.jpg" height="180" width="180"/>
+<p id="playingNow"></p>
 <button id="play">בואו נשמע קצת מוזיקה</button>
 <button id="pause">!עצור סוסים</button>
 <div id="volume">
     <input id="volumeBar" type="range" min="1" max="100" value="50" class="slider" id="myRange">
 </div>
+
+
 <script src="popup.js"></script>
 </body>
 </html>

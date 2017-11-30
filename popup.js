@@ -1,10 +1,12 @@
 /**
  * Created by mikiz on 30/11/2017.
  */
+
 document.addEventListener('DOMContentLoaded', function () {
     var bgp = chrome.extension.getBackgroundPage();
     var playBtn = document.getElementById('play');
     var stopBtn = document.getElementById('pause');
+    var playingNow = document.getElementById('playingNow');
     var volume = document.getElementById('volumeBar');
     showButtons(bgp, playBtn, stopBtn);
 
@@ -24,6 +26,14 @@ document.addEventListener('DOMContentLoaded', function () {
         bgp.stop();
         showButtons(bgp, playBtn, stopBtn);
     }, false);
+
+    setInterval(function(){
+        if(playingNow.innerText !== bgp.playingNow) {
+            playingNow.innerText = bgp.playingNow;
+        }
+    },5000);
+
+
 }, false);
 
 function showButtons(bgp, playBtn, stopBtn) {
@@ -36,3 +46,4 @@ function showButtons(bgp, playBtn, stopBtn) {
         playBtn.classList.remove("hide");
     }
 }
+
