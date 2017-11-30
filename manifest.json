@@ -7,7 +7,7 @@
     "128": "icon.png"
   },
   "description": "This extension is the first Miki Ziso Plugin",
-  "version": "2.0",
+  "version": "2.2",
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -20,5 +20,7 @@
   "permissions": [
     "notifications",
     "https://glz.co.il/"
-  ]
+  ],
+  "author": "Miki Ziso , Shlomy Nahum"
+
 }
