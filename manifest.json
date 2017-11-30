@@ -18,6 +18,7 @@
     "scripts": ["bg.js"]
   },
   "permissions": [
-    "notifications"
+    "notifications",
+    "https://glz.co.il/"
   ]
 }
