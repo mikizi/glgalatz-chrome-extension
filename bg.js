@@ -3,31 +3,32 @@
  */
 
 //createNotification();
-setInterval(getPlayerData,5000);
+var glglz = {audio:'',data:"",interval:0};
+glglz.interval = setInterval(getPlayerData,5000);
 getPlayerData();
 audioNotification();
 
-var audio;
-var data = "";
 function audioNotification() {
-    audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
-    audio.play();
+    glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
+    glglz.audio.play();
 }
 
 function start() {
-    audio.play();
+    glglz.audio.play();
+    glglz.interval = setInterval(getPlayerData,5000);
 }
 
 function stop() {
-    audio.pause();
+    glglz.audio.pause();
+    clearInterval(glglz.interval);
 }
 
 function volume(val) {
-    audio.volume = val/100;
+    glglz.audio.volume = val/100;
 }
 
 function isPlaying() {
-    return !audio.paused;
+    return !glglz.audio.paused;
 }
 
 function createNotification(res) {
