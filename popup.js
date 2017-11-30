@@ -5,10 +5,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var bgp = chrome.extension.getBackgroundPage();
     var playBtn = document.getElementById('play');
     var stopBtn = document.getElementById('pause');
+    var volume = document.getElementById('volumeBar');
     showButtons(bgp, playBtn, stopBtn);
 
     playBtn.addEventListener('click', function () {
         bgp.start();
+        showButtons(bgp, playBtn, stopBtn);
+    }, false);
+
+    volume.addEventListener('change', function () {
+        bgp.volume(this.value);
         showButtons(bgp, playBtn, stopBtn);
     }, false);
 
