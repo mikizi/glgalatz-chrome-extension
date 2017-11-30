@@ -32,8 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             playingNow.innerText = bgp.playingNow;
         }
     },5000);
-
-
+    volume.value = bgp.glglz.audio.volume*100;
 }, false);
 
 function showButtons(bgp, playBtn, stopBtn) {

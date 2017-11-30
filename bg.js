@@ -61,9 +61,9 @@ function getPlayerData(){
     xhr.open("GET",url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if(data != xhr.responseText){
-                data = xhr.responseText;
-                createNotification(JSON.parse(data));
+            if(glglz.data != xhr.responseText){
+                glglz.data = xhr.responseText;
+                createNotification(JSON.parse(glglz.data));
             }
         }
     };
