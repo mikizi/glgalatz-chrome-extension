@@ -32,10 +32,10 @@ function isPlaying() {
 
 function createNotification(res) {
     var nextSongName = res.titleNext;
-    var autor = res.autor;
+    var author = res.autor;
     var title = res.title;
     var programmeName = res.programmeName;
-    var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+title+" - "+ autor + "\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
+    var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+(title!="" ? (title+" - "+ author): "" )+ "\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
 
     chrome.notifications.create("notificationName", opt, function () {
     });
