@@ -16,7 +16,7 @@ function audioNotification() {
 
 function start() {
     glglz.audio.play();
-    glglz.interval = setInterval(getPlayerData,5000);
+    glglz.interval = setInterval(getPlayerData,4000);
 }
 
 function stop() {
