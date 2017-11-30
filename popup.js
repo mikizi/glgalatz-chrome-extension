@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
         showButtons(bgp, playBtn, stopBtn);
     }, false);
 
-    volume.oninput = function () {
+    volume.addEventListener("input", function () {
         bgp.volume(this.value);
         showButtons(bgp, playBtn, stopBtn);
-    };
+    }, false);
 
 
     stopBtn.addEventListener('click', function () {
