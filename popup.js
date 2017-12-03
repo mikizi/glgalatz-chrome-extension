@@ -20,16 +20,28 @@ document.addEventListener('DOMContentLoaded', function () {
         showButtons(bgp, playBtn, stopBtn);
     }, false);
 
-
     stopBtn.addEventListener('click', function () {
         var bgp = chrome.extension.getBackgroundPage();
         bgp.stop();
         showButtons(bgp, playBtn, stopBtn);
     }, false);
 
+    if(localStorage.getItem("playingNow")){
+        playingNow.innerText = bgp.playingNow;
+    }
+
     setInterval(function(){
-        if(playingNow.innerText !== bgp.playingNow) {
-            playingNow.innerText = bgp.playingNow;
+        if(playingNow.innerText != bgp.playingNow) {
+            if(playingNow.innerText){
+                playingNow.classList.remove('animatedText');
+            }else{
+                localStorage.setItem("playingNow", bgp.playingNow);
+            }
+
+            setTimeout(function () {
+                playingNow.classList.add('animatedText');
+                playingNow.innerText = bgp.playingNow;
+            },50);
         }
     },5000);
     volume.value = bgp.glglz.audio.volume*100;
