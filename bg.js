@@ -17,8 +17,7 @@ function start() {
     glglz.interval = setInterval(getPlayerData,4000);
 }
 function stop() {
-
-    glglz.audio.pause();
+    glglz.audio.stop();
     glglz.playState="stop";
     clearInterval(glglz.interval);
     saveData();
