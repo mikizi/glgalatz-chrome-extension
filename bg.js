@@ -3,7 +3,7 @@
  */
 
 //createNotification();
-var playingNow,glglz;
+var playingNow, glglz;
 initPlayer();
 
 function initPlayer() {
@@ -12,20 +12,20 @@ function initPlayer() {
 
 function start() {
     glglz.audio.play();
-    glglz.playState="play";
+    glglz.playState = "play";
     saveData();
-    glglz.interval = setInterval(getPlayerData,4000);
+    glglz.interval = setInterval(getPlayerData, 4000);
 }
 function stop() {
     glglz.audio.stop();
-    glglz.playState="stop";
+    glglz.playState = "stop";
     clearInterval(glglz.interval);
     saveData();
 }
 
 function volume(val) {
 
-    glglz.audio.volume = val/100;
+    glglz.audio.volume = val / 100;
     saveData();
 }
 
@@ -38,31 +38,37 @@ function createNotification(res) {
     var author = res.autor;
     var title = res.title;
     var programmeName = res.programmeName;
-    var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+(title!="" ? (title+" - "+ author): "" )+ "\n\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
+    var opt = {
+        type: "basic",
+        title: "גלגלצ - " + programmeName,
+        message: "" + (title != "" ? (title + " - " + author) : "" ) + "\n\n" + "הבא: " + nextSongName,
+        iconUrl: "icon.png"
+    };
     updateSongName(opt);
     chrome.notifications.create("notificationName", opt, function () {
     });
 
     //include this line if you want to clear the notification after 5 seconds
     setTimeout(function () {
-        chrome.notifications.clear("notificationName", function () { });
+        chrome.notifications.clear("notificationName", function () {
+        });
     }, 5000);
 }
 
-function updateSongName(opt){
+function updateSongName(opt) {
     playingNow = opt.message;
 }
 
-function getPlayerData(){
+function getPlayerData() {
     //var url = 'http://localhost:1337/__sites/reshetTv2016/serviceTest.php';
     var url = 'https://glz.co.il/umbraco/api/player/GetTrackNameFromXml?rootId=1920&channelIndex=-1';
     // var url = 'https://glz.co.il/umbraco/api/player/getplayerdata?rootId=1920';
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",url, true);
-    xhr.onreadystatechange = function() {
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            if(glglz.data != xhr.responseText){
+            if (glglz.data != xhr.responseText) {
                 glglz.data = xhr.responseText;
                 createNotification(JSON.parse(glglz.data));
             }
@@ -71,19 +77,25 @@ function getPlayerData(){
     xhr.send();
 }
 function saveData() {
-    chrome.storage.sync.set({'glglz': glglz}, function() {
+    chrome.storage.sync.set({'glglz': glglz}, function () {
         // Notify that we saved.
         message('Settings saved');
     });
 }
 function loadData() {
-    chrome.storage.sync.get('glglz', function(items)  {
+    chrome.storage.sync.get('glglz', function (items) {
         // Notify that we saved.
-        glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play"};
+        glglz = items.hasOwnProperty('glglz') ? items.glglz : {
+            audio: '',
+            data: "",
+            interval: 0,
+            playingNow: "",
+            playState: "play"
+        };
         glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
-        if (glglz.playState=="play"){
+        if (glglz.playState == "play") {
             glglz.audio.play();
-            glglz.interval = setInterval(getPlayerData,5000);
+            glglz.interval = setInterval(getPlayerData, 5000);
         }
         // console.log(items);
         // message('Settings loaded');
@@ -91,6 +103,7 @@ function loadData() {
 }
 
 function message(str) {
-    var opt = {type: "basic", title: "גלגלצ", message: str , iconUrl: "icon.png"};
-    chrome.notifications.create("notificationName", opt, function () {   });
+    var opt = {type: "basic", title: "גלגלצ", message: str, iconUrl: "icon.png"};
+    chrome.notifications.create("notificationName", opt, function () {
+    });
 }
