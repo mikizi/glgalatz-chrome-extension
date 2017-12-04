@@ -11,21 +11,27 @@ function initPlayer() {
 }
 
 function start() {
-    glglz.audio.play();
-    glglz.playState="play";
-    saveData();
-    glglz.interval = setInterval(getPlayerData,4000);
+    loadData();
+    // glglz.audio.play();
+    // glglz.playState="play";
+    // saveData();
+    // glglz.interval = setInterval(getPlayerData,4000);
 }
+function changeNotifications(checked) {
+    glglz.showNotifications = checked;
+    saveData();
+}
+
 function stop() {
-    glglz.audio.stop();
+    glglz.audio.pause();
     glglz.playState="stop";
     clearInterval(glglz.interval);
     saveData();
 }
 
 function volume(val) {
-
     glglz.audio.volume = val/100;
+    glglz.volume = val/100;
     saveData();
 }
 
@@ -34,19 +40,21 @@ function isPlaying() {
 }
 
 function createNotification(res) {
-    var nextSongName = res.titleNext;
-    var author = res.autor;
-    var title = res.title;
-    var programmeName = res.programmeName;
-    var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+(title!="" ? (title+" - "+ author): "" )+ "\n\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
-    updateSongName(opt);
-    chrome.notifications.create("notificationName", opt, function () {
-    });
+    if(glglz.showNotifications){
+        var nextSongName = res.titleNext;
+        var author = res.autor;
+        var title = res.title;
+        var programmeName = res.programmeName;
+        var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+(title!="" ? (title+" - "+ author): "" )+ "\n\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
+        updateSongName(opt);
+        chrome.notifications.create("notificationName", opt, function () {
+        });
 
-    //include this line if you want to clear the notification after 5 seconds
-    setTimeout(function () {
-        chrome.notifications.clear("notificationName", function () { });
-    }, 5000);
+        //include this line if you want to clear the notification after 5 seconds
+        setTimeout(function () {
+            chrome.notifications.clear("notificationName", function () { });
+        }, 5000);
+    }
 }
 
 function updateSongName(opt){
@@ -73,20 +81,18 @@ function getPlayerData(){
 function saveData() {
     chrome.storage.sync.set({'glglz': glglz}, function() {
         // Notify that we saved.
-        message('Settings saved');
+        //message('Settings saved');
     });
 }
 function loadData() {
     chrome.storage.sync.get('glglz', function(items)  {
         // Notify that we saved.
-        glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play"};
+        glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play",showNotifications:true,volume:1};
         glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
         if (glglz.playState=="play"){
             glglz.audio.play();
             glglz.interval = setInterval(getPlayerData,5000);
         }
-        // console.log(items);
-        // message('Settings loaded');
     });
 }
 
