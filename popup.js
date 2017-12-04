@@ -72,7 +72,7 @@ function showButtons(bgp, playBtn, stopBtn) {
 function toggleSettings() {
     var settingsView = document.getElementById("settingsView");
     settingsView.classList.toggle("show");
-    var main = document.getElementById("main");
-    main.classList.toggle("show");
+    // var main = document.getElementById("main");
+    // main.classList.toggle("show");
 }
 

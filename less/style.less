@@ -11,10 +11,27 @@
     -webkit-transform: translate(0px,0px);
   }
 }
+.row{
+  flex-direction: row;
+  &+.row{
+    margin-top:10px ;
+  }
+  *{
+    display: inline-flex;
+    margin: auto;
+  }
+}
+.col{
+  flex-direction: column;
+}
 body {
   background: #51305f;
   color: @yellow;
   margin: 20px;
+  text-align: right;
+  *{
+    display: flex;
+  }
   .settings{
     height: 0;
     width: 100%;
@@ -40,8 +57,14 @@ body {
     text-align: right;
     .hide();
     .transition(all 1s ease);
+    display: flex;
+    flex-direction: column;
     &.show{
-      .show();
+      .show(1,50px);
+    }
+    .input{
+      margin: auto 5px;
+      width: 25px;
     }
   }
 }
@@ -60,10 +83,11 @@ button {
   outline: none;
   font-size: 14px;
   font-weight: 700;
+  display: block;
 }
 #volume {
   width: 100%;
-  margin-top: 10px;
+  margin: 10px auto;
   .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -104,17 +128,17 @@ p#playingNow {
   -webkit-transform-origin: 50% 50%;
   -webkit-animation-fill-mode: forwards;
 }
-.show(){
-  opacity: 1;
-  height: auto;
-  visibility: visible;
+.show(@o:1,@h:auto){
+  opacity: @o;
+  height: @h;
+  //visibility: visible;
 }
 .hide(){
   opacity: 0;
-  visibility: hidden;
+  //visibility: hidden;
   height: 0;
 }
-.transition(@p:all 0.5s ease){
+.transition(@p:all 0.25s ease){
   -webkit-transition: @p;
   -moz-transition: @p;
   -ms-transition: @p;

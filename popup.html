@@ -10,7 +10,17 @@
 <div class="settings" id="settings">
     <i class="material-icons">settings</i>
 </div>
-<div id="main" class="show">
+<div id="settingsView" class="col">
+    <div class="row">
+        <label for="notifications">הצג התראות</label>
+        <input type="checkbox" name="notifications" id="notifications" class="input">
+    </div>
+    <div class="row">
+        <label for="autorenew">טען מחדש</label>
+        <i class="material-icons input" id="autorenew">autorenew</i>
+    </div>
+</div>
+<div id="main" class="show col">
     <img src="glgtz.jpg" height="180" width="180"/>
     <p id="playingNow"></p>
     <button id="play">בואו נשמע קצת מוזיקה</button>
@@ -19,12 +29,7 @@
         <input id="volumeBar" type="range" min="1" max="100" value="50" class="slider">
     </div>
 </div>
-<div id="settingsView">
-    <label for="notifications">הצג התראות</label>
-    <input type="checkbox" name="notifications" id="notifications"><br>
-    <label for="autorenew">טען מחדש</label>
-    <i class="material-icons" id="autorenew">autorenew</i>
-</div>
+
 <script src="popup.js"></script>
 </body>
 </html>
