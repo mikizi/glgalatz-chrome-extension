@@ -34,12 +34,15 @@ document.addEventListener('DOMContentLoaded', function () {
         showButtons(bgp, playBtn, stopBtn);
     }, false);
 
-    if(localStorage.getItem("playingNow")){
+    if(bgp.isPlaying() &&  bgp.playingNow && localStorage.getItem("playingNow")){
+        debugger;
         playingNow.innerText = bgp.playingNow;
+    }else{
+        playingNow.innerText = '';
     }
 
     setInterval(function(){
-        if(playingNow.innerText != bgp.playingNow) {
+        if(bgp.isPlaying() && bgp.playingNow && playingNow.innerText != bgp.playingNow) {
             if(playingNow.innerText){
                 playingNow.classList.remove('animatedText');
             }else{

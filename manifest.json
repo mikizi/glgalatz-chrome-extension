@@ -1,13 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "mikiz extension Plugin",
+  "name": "Galgalatz - play it live - מוזיקה זה גלגלצ",
+  "short_name": "שידור חי בגלגלצ",
   "icons":
   {
     "128": "icon.png"
   },
-  "description": "This extension is the first Miki Ziso Plugin",
-  "version": "2.2",
+  "description": "Listen to the radio station and get song updates",
+  "version": "0.0.0.1",
 
   "browser_action": {
     "default_icon": "icon.png",

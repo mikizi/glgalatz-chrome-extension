@@ -57,20 +57,20 @@ function createNotification(res) {
     }
 }
 
-function updateSongName(opt){
+function updateSongName(opt) {
     playingNow = opt.message;
 }
 
-function getPlayerData(){
+function getPlayerData() {
     //var url = 'http://localhost:1337/__sites/reshetTv2016/serviceTest.php';
     var url = 'https://glz.co.il/umbraco/api/player/GetTrackNameFromXml?rootId=1920&channelIndex=-1';
     // var url = 'https://glz.co.il/umbraco/api/player/getplayerdata?rootId=1920';
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",url, true);
-    xhr.onreadystatechange = function() {
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-            if(glglz.data != xhr.responseText){
+            if (glglz.data != xhr.responseText) {
                 glglz.data = xhr.responseText;
                 createNotification(JSON.parse(glglz.data));
             }
@@ -85,18 +85,19 @@ function saveData() {
     });
 }
 function loadData() {
-    chrome.storage.sync.get('glglz', function(items)  {
+    chrome.storage.sync.get('glglz', function (items) {
         // Notify that we saved.
         glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play",showNotifications:true,volume:1};
         glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
-        if (glglz.playState=="play"){
+        if (glglz.playState == "play") {
             glglz.audio.play();
-            glglz.interval = setInterval(getPlayerData,5000);
+            glglz.interval = setInterval(getPlayerData, 5000);
         }
     });
 }
 
 function message(str) {
-    var opt = {type: "basic", title: "גלגלצ", message: str , iconUrl: "icon.png"};
-    chrome.notifications.create("notificationName", opt, function () {   });
+    var opt = {type: "basic", title: "גלגלצ", message: str, iconUrl: "icon.png"};
+    chrome.notifications.create("notificationName", opt, function () {
+    });
 }
