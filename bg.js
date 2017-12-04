@@ -11,11 +11,10 @@ function initPlayer() {
 }
 
 function start() {
-    loadData();
-    // glglz.audio.play();
-    // glglz.playState="play";
-    // saveData();
-    // glglz.interval = setInterval(getPlayerData,4000);
+    glglz.audio.play();
+    glglz.playState="play";
+    saveData();
+    glglz.interval = setInterval(getPlayerData,4000);
 }
 function changeNotifications(checked) {
     glglz.showNotifications = checked;
@@ -30,8 +29,8 @@ function stop() {
 }
 
 function volume(val) {
-    glglz.audio.volume = val/100;
     glglz.volume = val/100;
+    glglz.audio.volume = glglz.volume;
     saveData();
 }
 
@@ -45,7 +44,7 @@ function createNotification(res) {
         var author = res.autor;
         var title = res.title;
         var programmeName = res.programmeName;
-        var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+(title!="" ? (title+" - "+ author): "" )+ "\n\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
+        var opt = {type: "basic", title: "גלגלצ - "+programmeName, message: ""+(title!="" ? (title+" - "+ author): "" )+ "\n" +"הבא: "+ nextSongName , iconUrl: "icon.png"};
         updateSongName(opt);
         chrome.notifications.create("notificationName", opt, function () {
         });
@@ -90,6 +89,7 @@ function loadData() {
         glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play",showNotifications:true,volume:1};
         glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
         if (glglz.playState == "play") {
+            glglz.audio.volume = glglz.volume;
             glglz.audio.play();
             glglz.interval = setInterval(getPlayerData, 5000);
         }
