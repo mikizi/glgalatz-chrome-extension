@@ -3,29 +3,30 @@
  */
 
 //createNotification();
-var playingNow;
-var glglz = {audio:'',data:"",interval:0};
-glglz.interval = setInterval(getPlayerData,5000);
-getPlayerData();
-audioNotification();
+var playingNow,glglz;
+initPlayer();
 
-function audioNotification() {
-    glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
-    glglz.audio.play();
+function initPlayer() {
+    loadData();
 }
 
 function start() {
     glglz.audio.play();
+    glglz.playState="play";
+    saveData();
     glglz.interval = setInterval(getPlayerData,4000);
 }
-
 function stop() {
-    glglz.audio.pause();
+    glglz.audio.stop();
+    glglz.playState="stop";
     clearInterval(glglz.interval);
+    saveData();
 }
 
 function volume(val) {
+
     glglz.audio.volume = val/100;
+    saveData();
 }
 
 function isPlaying() {
@@ -68,4 +69,28 @@ function getPlayerData(){
         }
     };
     xhr.send();
+}
+function saveData() {
+    chrome.storage.sync.set({'glglz': glglz}, function() {
+        // Notify that we saved.
+        message('Settings saved');
+    });
+}
+function loadData() {
+    chrome.storage.sync.get('glglz', function(items)  {
+        // Notify that we saved.
+        glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play"};
+        glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
+        if (glglz.playState=="play"){
+            glglz.audio.play();
+            glglz.interval = setInterval(getPlayerData,5000);
+        }
+        // console.log(items);
+        // message('Settings loaded');
+    });
+}
+
+function message(str) {
+    var opt = {type: "basic", title: "גלגלצ", message: str , iconUrl: "icon.png"};
+    chrome.notifications.create("notificationName", opt, function () {   });
 }

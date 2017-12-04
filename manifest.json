@@ -19,6 +19,7 @@
   },
   "permissions": [
     "notifications",
+    "storage",
     "https://glz.co.il/"
   ],
   "author": "Miki Ziso , Shlomy Nahum"
