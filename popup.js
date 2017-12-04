@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showButtons(bgp, playBtn, stopBtn);
     }, false);
 
-    notifications.addEventListener('input', function () {
+    notifications.addEventListener('change', function () {
         bgp.changeNotifications(this.checked);
     }, false);
 
@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },50);
         }
     },5000);
-    volume.value = bgp.glglz.audio.volume*100;
+    volume.value = bgp.glglz.volume*100;
+    notifications.checked = bgp.glglz.showNotifications;
 }, false);
 
 function showButtons(bgp, playBtn, stopBtn) {
