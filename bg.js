@@ -41,7 +41,7 @@ function createNotification(res) {
     var opt = {
         type: "basic",
         title: "גלגלצ - " + programmeName,
-        message: "" + (title != "" ? (title + " - " + author) : "" ) + "\n\n" + "הבא: " + nextSongName,
+        message: "" + (title != "" ? (title + " - " + author) : "" ) + "\n" + "הבא: " + nextSongName,
         iconUrl: "icon.png"
     };
     updateSongName(opt);
@@ -90,7 +90,7 @@ function loadData() {
             data: "",
             interval: 0,
             playingNow: "",
-            playState: "play"
+            playState: "stop"
         };
         glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
         if (glglz.playState == "play") {

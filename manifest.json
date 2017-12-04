@@ -1,7 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Galgalatz - play it live",
+  "name": "Galgalatz - play it live - מוזיקה זה גלגלצ",
+  "short_name": "שידור חי בגלגלצ",
   "icons":
   {
     "128": "icon.png"
