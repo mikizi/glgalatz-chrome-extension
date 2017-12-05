@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setInterval(function(){
-        if(bgp.isPlaying() && bgp.playingNow && playingNow.innerText != bgp.playingNow) {
+        if(bgp.isPlaying() && bgp.playingNow && playingNow.innerText.replace(/\s/g, '') != bgp.playingNow.replace(/\s/g, '')) {
             if(playingNow.innerText){
                 playingNow.classList.remove('animatedText');
             }else{

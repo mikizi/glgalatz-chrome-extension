@@ -11,7 +11,7 @@ function initPlayer() {
 }
 
 function start() {
-    glglz.audio.play();
+    glglz.audio.volume =  glglz.volume;
     glglz.playState="play";
     saveData();
     glglz.interval = setInterval(getPlayerData,4000);
@@ -22,7 +22,8 @@ function changeNotifications(checked) {
 }
 
 function stop() {
-    glglz.audio.pause();
+    glglz.audio.volume =  0;
+    //glglz.audio.pause();
     glglz.playState="stop";
     clearInterval(glglz.interval);
     saveData();
@@ -35,7 +36,7 @@ function volume(val) {
 }
 
 function isPlaying() {
-    return !glglz.audio.paused;
+    return glglz.playState === "play";
 }
 
 function createNotification(res) {
@@ -86,13 +87,19 @@ function saveData() {
 function loadData() {
     chrome.storage.sync.get('glglz', function (items) {
         // Notify that we saved.
-        glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"play",showNotifications:true,volume:1};
+        glglz = items.hasOwnProperty('glglz') ? items.glglz : {audio:'',data:"",interval:0,playingNow:"",playState:"stop",showNotifications:true,volume:1};
         glglz.audio = new Audio('https://api.bynetcdn.com/Redirector/glz/glglz/ICE-LIVE?tn=&ts=1484122046" type="audio/mpeg');
+        if(glglz.volume === undefined){
+            glglz.volume = 1;
+        }
+        glglz.audio.play();
         if (glglz.playState == "play") {
             glglz.audio.volume = glglz.volume;
-            glglz.audio.play();
             glglz.interval = setInterval(getPlayerData, 5000);
+        }else{
+            glglz.audio.volume = 0;
         }
+
     });
 }
 
