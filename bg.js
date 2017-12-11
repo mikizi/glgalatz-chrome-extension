@@ -11,7 +11,11 @@ function initPlayer() {
 }
 
 function start() {
+    if(isPlaying()) {
+        glglz.audio.load();
+    }
     glglz.audio.volume =  glglz.volume;
+    glglz.audio.play();
     glglz.playState="play";
     saveData();
     glglz.interval = setInterval(getPlayerData,4000);
@@ -22,7 +26,7 @@ function changeNotifications(checked) {
 }
 
 function stop() {
-    glglz.audio.volume =  0;
+    glglz.audio.pause();
     //glglz.audio.pause();
     glglz.playState="stop";
     clearInterval(glglz.interval);
@@ -92,12 +96,13 @@ function loadData() {
         if(glglz.volume === undefined){
             glglz.volume = 1;
         }
-        glglz.audio.play();
+
         if (glglz.playState == "play") {
+            glglz.audio.play();
             glglz.audio.volume = glglz.volume;
             glglz.interval = setInterval(getPlayerData, 5000);
         }else{
-            glglz.audio.volume = 0;
+            glglz.audio.pause();
         }
 
     });
